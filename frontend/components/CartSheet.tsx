@@ -10,7 +10,7 @@ import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { useShop } from './ShopContext';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface CartSheetProps {
   open: boolean;

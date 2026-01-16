@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
-from . import crud, models, schemas, auth, database
+import crud, models, schemas, auth, database
 
 models.Base.metadata.create_all(bind=database.engine)
 

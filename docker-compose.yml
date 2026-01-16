@@ -15,7 +15,7 @@ services:
       - ./backend/BD/TABS.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
-    build: 
+    build:
       context: ./backend
     ports:
       - "8000:8000"
@@ -24,6 +24,8 @@ services:
     depends_on:
       - db
     restart: always
+    volumes:
+      - ./backend:/app
 
   frontend:
     build:

@@ -5,7 +5,7 @@ from passlib.context import CryptContext
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from . import models, database
+import models, database
 
 # SECRET KEY should be in environment variables
 SECRET_KEY = "SECRET_KEY_GOES_HERE" 
