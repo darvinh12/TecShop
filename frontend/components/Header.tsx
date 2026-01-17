@@ -18,6 +18,7 @@ export function Header({ onOpenCart, onOpenAuth }: HeaderProps) {
     { name: 'Inicio', path: '/' },
     { name: 'Productos', path: '/products' },
     { name: 'Sobre Nosotros', path: '/about' },
+    { name: 'Contacto', path: '/contact' },
   ];
 
   if (user) {

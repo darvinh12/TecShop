@@ -1,4 +1,6 @@
+/// <reference types="vite/client" />
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { Laptop, Smartphone, Headphones, Gamepad2 } from 'lucide-react';
 
 export interface Product {
   id: number;
@@ -34,6 +36,7 @@ interface ShopContextType {
   updateProfile: (data: { name?: string; email?: string; password?: string }) => Promise<boolean>;
   fetchOrders: () => Promise<any[]>;
   fetchActivity: () => Promise<any>;
+  categories: { name: string; icon: any; color: string }[];
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
@@ -54,7 +57,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${API_URL}/products`);
+      const response = await fetch(`${API_URL}/products?t=${new Date().getTime()}&limit=100`);
       console.log('Fetch response status:', response.status);
       if (response.ok) {
         const data = await response.json();
@@ -220,6 +223,13 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     return null;
   };
 
+  const categories = [
+    { name: "Laptops & Work", icon: <Laptop />, color: "bg-blue-50 text-blue-600" },
+    { name: "Mobile Gear", icon: <Smartphone />, color: "bg-purple-50 text-purple-600" },
+    { name: "Premium Audio", icon: <Headphones />, color: "bg-pink-50 text-pink-600" },
+    { name: "Ultimate Gaming", icon: <Gamepad2 />, color: "bg-orange-50 text-orange-600" }
+  ];
+
   const contextValue: ShopContextType = {
     products,
     cart,
@@ -235,7 +245,8 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     getTotalPrice,
     updateProfile,
     fetchOrders,
-    fetchActivity
+    fetchActivity,
+    categories
   };
 
   return (

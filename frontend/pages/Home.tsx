@@ -147,16 +147,17 @@ export default function Home() {
                             { name: "Premium Audio", icon: <Headphones />, color: "bg-pink-50 text-pink-600" },
                             { name: "Ultimate Gaming", icon: <Gamepad2 />, color: "bg-orange-50 text-orange-600" }
                         ].map((cat, i) => (
-                            <motion.div
-                                key={i}
-                                whileHover={{ y: -10 }}
-                                className="flex flex-col items-center p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all cursor-pointer group"
-                            >
-                                <div className={`mb-6 p-4 rounded-2xl transition-colors group-hover:bg-indigo-600 group-hover:text-white ${cat.color}`}>
-                                    {cat.icon}
-                                </div>
-                                <h3 className="font-bold text-slate-900 text-lg">{cat.name}</h3>
-                            </motion.div>
+                            <Link key={i} to={`/products?category=${encodeURIComponent(cat.name)}`}>
+                                <motion.div
+                                    whileHover={{ y: -10 }}
+                                    className="flex flex-col items-center p-8 rounded-3xl bg-white border border-slate-100 shadow-sm hover:shadow-xl transition-all cursor-pointer group"
+                                >
+                                    <div className={`mb-6 p-4 rounded-2xl transition-colors group-hover:bg-indigo-600 group-hover:text-white ${cat.color}`}>
+                                        {cat.icon}
+                                    </div>
+                                    <h3 className="font-bold text-slate-900 text-lg">{cat.name}</h3>
+                                </motion.div>
+                            </Link>
                         ))}
                     </div>
                 </div>

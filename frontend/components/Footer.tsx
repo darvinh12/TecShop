@@ -34,7 +34,7 @@ export function Footer() {
                         <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider">Empresa</h4>
                         <ul className="space-y-2 text-sm text-gray-600">
                             <li><a href="/about" className="hover:text-indigo-600 transition-colors">Sobre Nosotros</a></li>
-                            <li><a href="#" className="hover:text-indigo-600 transition-colors">Contacto</a></li>
+                            <li><a href="/contact" className="hover:text-indigo-600 transition-colors">Contacto</a></li>
                             <li><a href="#" className="hover:text-indigo-600 transition-colors">Términos</a></li>
                         </ul>
                     </div>
