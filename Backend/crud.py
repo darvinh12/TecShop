@@ -49,3 +49,17 @@ def create_order(db: Session, order: schemas.OrderCreate, user_id: int):
     db.commit()
     db.refresh(db_order)
     return db_order
+
+def update_user(db: Session, db_user: models.User, user_update: schemas.UserUpdate):
+    if user_update.name:
+        db_user.name = user_update.name
+    if user_update.email:
+        db_user.email = user_update.email
+    if user_update.password:
+        db_user.hashed_password = auth.get_password_hash(user_update.password)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
+def get_user_orders(db: Session, user_id: int):
+    return db.query(models.Order).filter(models.Order.user_id == user_id).order_by(models.Order.created_at.desc()).all()

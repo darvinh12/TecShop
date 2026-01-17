@@ -16,6 +16,16 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
+class UserUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    password: Optional[str] = None
+
+class UserActivity(BaseModel):
+    total_orders: int
+    last_order_date: Optional[datetime]
+    account_created: datetime
+
 # Token Schemas
 class Token(BaseModel):
     access_token: str

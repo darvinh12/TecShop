@@ -31,6 +31,9 @@ interface ShopContextType {
   logout: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  updateProfile: (data: { name?: string; email?: string; password?: string }) => Promise<boolean>;
+  fetchOrders: () => Promise<any[]>;
+  fetchActivity: () => Promise<any>;
 }
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
@@ -42,16 +45,20 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [user, setUser] = useState<User | null>(null);
 
+  console.log('API URL:', API_URL);
 
   useEffect(() => {
+    console.log('ShopProvider mounted, fetching products...');
     fetchProducts();
   }, []);
 
   const fetchProducts = async () => {
     try {
       const response = await fetch(`${API_URL}/products`);
+      console.log('Fetch response status:', response.status);
       if (response.ok) {
         const data = await response.json();
+        console.log('Products fetched successfully:', data.length, 'items');
         setProducts(data);
       } else {
         console.error('Failed to fetch products');
@@ -155,6 +162,64 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+  const updateProfile = async (data: { name?: string; email?: string; password?: string }): Promise<boolean> => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/auth/me`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const updatedUser = await response.json();
+        setUser({ email: updatedUser.email, name: updatedUser.name });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Update profile error:', error);
+      return false;
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/orders/me`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.error('Fetch orders error:', error);
+    }
+    return [];
+  };
+
+  const fetchActivity = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${API_URL}/auth/me/activity`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+      });
+      if (response.ok) {
+        return await response.json();
+      }
+    } catch (error) {
+      console.error('Fetch activity error:', error);
+    }
+    return null;
+  };
+
   const contextValue: ShopContextType = {
     products,
     cart,
@@ -168,6 +233,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     logout,
     getTotalItems,
     getTotalPrice,
+    updateProfile,
+    fetchOrders,
+    fetchActivity
   };
 
   return (

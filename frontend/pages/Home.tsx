@@ -49,6 +49,10 @@ export default function Home() {
 
     return (
         <div className="flex flex-col gap-0">
+            {/* DEBUG MARKER */}
+            <div className="fixed bottom-0 right-0 z-[9999] bg-red-600 text-white px-2 py-1 text-[10px] font-bold opacity-50">
+                v2.0-RESTRUCTURING
+            </div>
             {/* Slider Revolution Style Hero */}
             <section className="relative h-[85vh] w-full overflow-hidden bg-slate-900">
                 <AnimatePresence mode="wait">
@@ -93,7 +97,7 @@ export default function Home() {
                                 </Link>
                                 <div className="flex items-center gap-3 px-6 py-4 text-white font-medium">
                                     <span className="h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-                                    Slogán: El futuro ya está aquí.
+                                    El futuro ya está aquí.
                                 </div>
                             </div>
                         </motion.div>

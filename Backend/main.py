@@ -52,6 +52,48 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
     access_token = auth.create_access_token(data={"sub": user.email})
     return {"access_token": access_token, "token_type": "bearer"}
 
+@app.get("/auth/me", response_model=schemas.User)
+def read_user_me(token: str = Depends(auth.oauth2_scheme), db: Session = Depends(get_db)):
+    payload = auth.jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
+    email: str = payload.get("sub")
+    user = crud.get_user_by_email(db, email=email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+@app.put("/auth/me", response_model=schemas.User)
+def update_user_me(user_update: schemas.UserUpdate, token: str = Depends(auth.oauth2_scheme), db: Session = Depends(get_db)):
+    payload = auth.jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
+    email: str = payload.get("sub")
+    db_user = crud.get_user_by_email(db, email=email)
+    if not db_user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return crud.update_user(db, db_user, user_update)
+
+@app.get("/auth/me/activity", response_model=schemas.UserActivity)
+def read_user_activity(token: str = Depends(auth.oauth2_scheme), db: Session = Depends(get_db)):
+    payload = auth.jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
+    email: str = payload.get("sub")
+    user = crud.get_user_by_email(db, email=email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    orders = crud.get_user_orders(db, user_id=user.id)
+    return {
+        "total_orders": len(orders),
+        "last_order_date": orders[0].created_at if orders else None,
+        "account_created": datetime.min # Placeholder if we don't have created_at in User
+    }
+
+@app.get("/orders/me", response_model=List[schemas.Order])
+def read_orders_me(token: str = Depends(auth.oauth2_scheme), db: Session = Depends(get_db)):
+    payload = auth.jwt.decode(token, auth.SECRET_KEY, algorithms=[auth.ALGORITHM])
+    email: str = payload.get("sub")
+    user = crud.get_user_by_email(db, email=email)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return crud.get_user_orders(db, user_id=user.id)
+
 # Product Routes
 @app.get("/products", response_model=List[schemas.Product])
 def read_products(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
