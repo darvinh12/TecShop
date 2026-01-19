@@ -10,14 +10,12 @@ models.Base.metadata.create_all(bind=database.engine)
 app = FastAPI()
 
 # CORS configuration
-origins = [
-    "http://localhost:3000",
-    "http://localhost:5173", # Vite default
-]
+import os
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173").split(",")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
