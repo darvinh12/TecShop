@@ -1,4 +1,6 @@
-import { ShoppingCart, User, LogOut } from 'lucide-react';
+import { useState } from 'react';
+import { ShoppingCart, User, LogOut, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Badge } from './ui/badge';
@@ -11,6 +13,7 @@ interface HeaderProps {
 
 export function Header({ onOpenCart, onOpenAuth }: HeaderProps) {
   const { user, logout, getTotalItems } = useShop();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const totalItems = getTotalItems();
   const location = useLocation();
 
@@ -50,8 +53,8 @@ export function Header({ onOpenCart, onOpenAuth }: HeaderProps) {
 
         <div className="flex items-center gap-3">
           {user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-gray-600 hidden sm:inline">
+            <div className="hidden sm:flex items-center gap-3">
+              <span className="text-sm text-gray-600">
                 Hola, {user.name}
               </span>
               <Button
@@ -68,10 +71,10 @@ export function Header({ onOpenCart, onOpenAuth }: HeaderProps) {
               variant="ghost"
               size="sm"
               onClick={onOpenAuth}
-              className="gap-2"
+              className="hidden sm:flex gap-2"
             >
               <User className="h-4 w-4" />
-              <span className="hidden sm:inline">Ingresar</span>
+              <span>Ingresar</span>
             </Button>
           )}
 
@@ -91,8 +94,78 @@ export function Header({ onOpenCart, onOpenAuth }: HeaderProps) {
               </Badge>
             )}
           </Button>
+
+          {/* Hamburger Menu Button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden h-9 w-9"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </Button>
         </div>
       </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t bg-white overflow-hidden"
+          >
+            <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`text-lg font-semibold py-2 transition-colors ${location.pathname === link.path ? 'text-indigo-600' : 'text-gray-600'
+                    }`}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <hr className="my-2" />
+              {user ? (
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-gray-600">
+                      Usuario: <span className="text-indigo-600">{user.name}</span>
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        logout();
+                        setIsMenuOpen(false);
+                      }}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 gap-2"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Cerrar Sesión
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  variant="indigo"
+                  className="w-full gap-2 justify-center"
+                  onClick={() => {
+                    onOpenAuth();
+                    setIsMenuOpen(false);
+                  }}
+                >
+                  <User className="h-4 w-4" />
+                  Ingresar a mi cuenta
+                </Button>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }
