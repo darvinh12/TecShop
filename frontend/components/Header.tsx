@@ -151,7 +151,7 @@ export function Header({ onOpenCart, onOpenAuth }: HeaderProps) {
                 </div>
               ) : (
                 <Button
-                  variant="indigo"
+                  variant="default"
                   className="w-full gap-2 justify-center"
                   onClick={() => {
                     onOpenAuth();
