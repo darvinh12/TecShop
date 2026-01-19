@@ -5,19 +5,19 @@ import { Objectives } from '../components/Objectives';
 export default function AboutUs() {
     const founders = [
         {
-            name: "Darvin Hernandez",
+            name: "Diego Martínez",
             role: "CEO & Co-Founder",
             bio: "Visionario tecnológico con más de 15 años de experiencia en el sector retail y transformación digital.",
             image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=400&fit=crop"
         },
         {
-            name: "Luis Garcia",
+            name: "Javier Rodríguez",
             role: "CTO & Co-Founder",
             bio: "Arquitecto de sistemas apasionado por las nuevas tecnologías y la optimización de procesos digitales.",
             image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&h=400&fit=crop"
         },
         {
-            name: "Laura Barreto",
+            name: "Valentina Díaz",
             role: "COO & Co-Founder",
             bio: "Experta en operaciones y estrategia de mercado, enfocada en brindar la mejor experiencia al cliente.",
             image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&h=400&fit=crop"
