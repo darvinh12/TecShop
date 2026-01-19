@@ -21,6 +21,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {"status": "ok", "message": "TechShop API is running"}
+
 def get_db():
     db = database.SessionLocal()
     try:
