@@ -49,7 +49,7 @@ export function CartSheet({ open, onOpenChange }: CartSheetProps) {
           </div>
         ) : (
           <>
-            <div className="flex-1 overflow-auto py-4">
+            <div className="flex-1 overflow-auto py-4 px-6">
               <div className="space-y-4">
                 {cart.map((item) => (
                   <div key={item.id} className="flex gap-4">
