@@ -36,10 +36,12 @@ export function CartSheet({ open, onOpenChange }: CartSheetProps) {
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent className="flex flex-col w-full sm:max-w-lg">
         <SheetHeader>
-          <SheetTitle>Carrito de Compras</SheetTitle>
-          <SheetDescription>
-            {cart.length === 0 ? 'Tu carrito está vacío' : `${cart.length} producto(s) en tu carrito`}
-          </SheetDescription>
+          <div className="px-6">
+            <SheetTitle>Carrito de Compras</SheetTitle>
+            <SheetDescription>
+              {cart.length === 0 ? 'Tu carrito está vacío' : `${cart.length} producto(s) en tu carrito`}
+            </SheetDescription>
+          </div>
         </SheetHeader>
 
         {cart.length === 0 ? (
@@ -107,7 +109,7 @@ export function CartSheet({ open, onOpenChange }: CartSheetProps) {
               </div>
             </div>
 
-            <div className="space-y-4 border-t pt-4">
+            <div className="space-y-4 border-t p-6">
               <div className="flex justify-between">
                 <span>Subtotal</span>
                 <span>${total.toFixed(2)}</span>
@@ -119,10 +121,10 @@ export function CartSheet({ open, onOpenChange }: CartSheetProps) {
               <Separator />
               <div className="flex justify-between">
                 <span>Total</span>
-                <span className="text-xl">${total.toFixed(2)}</span>
+                <span className="text-xl font-bold">${total.toFixed(2)}</span>
               </div>
 
-              <Button onClick={handleCheckout} className="w-full" size="lg">
+              <Button onClick={handleCheckout} className="w-full h-12 text-lg font-bold" size="lg">
                 Finalizar Compra
               </Button>
             </div>
