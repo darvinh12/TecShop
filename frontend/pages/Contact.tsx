@@ -58,8 +58,8 @@ export default function Contact() {
                                 {
                                     icon: <MapPin className="w-6 h-6" />,
                                     title: "Ubicación",
-                                    detail: "Caracas, Venezuela",
-                                    desc: "Visita nuestras oficinas centrales",
+                                    detail: "Los Chaguaramos Caracas, Venezuela",
+                                    desc: "Código Postal: 1050",
                                     color: "text-red-600 bg-red-50"
                                 }
                             ].map((item, i) => (
@@ -166,7 +166,7 @@ export default function Contact() {
                         className="relative h-[450px] w-full rounded-[3rem] overflow-hidden shadow-2xl border-4 border-white"
                     >
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125530.8529285075!2d-67.03046!3d10.48801!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a58adcd86b505%3A0x513b41bb396a8710!2sCaracas%2C%20Distrito%20Capital!5e0!3m2!1ses!2sve!4v1705530000000!5m2!1ses!2sve"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3923.3670183186255!2d-66.8918451!3d10.4856012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8c2a5905d452d37d%3A0xc06e6761ed81e7d!2sLos%20Chaguaramos%2C%20Caracas%201041%2C%20Distrito%20Capital!5e0!3m2!1ses-419!2sve!4v1716300000000!5m2!1ses-419!2sve"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}
