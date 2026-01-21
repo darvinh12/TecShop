@@ -8,6 +8,7 @@ import {
 } from './ui/sheet';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
+import { useNavigate } from 'react-router-dom';
 import { useShop } from './ShopContext';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { toast } from 'sonner';
@@ -19,6 +20,7 @@ interface CartSheetProps {
 
 export function CartSheet({ open, onOpenChange }: CartSheetProps) {
   const { cart, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useShop();
+  const navigate = useNavigate();
   const total = getTotalPrice();
 
   const handleCheckout = () => {
@@ -26,9 +28,8 @@ export function CartSheet({ open, onOpenChange }: CartSheetProps) {
       toast.error('El carrito está vacío');
       return;
     }
-    toast.success('¡Compra realizada con éxito!');
-    clearCart();
     onOpenChange(false);
+    navigate('/checkout');
   };
 
   return (

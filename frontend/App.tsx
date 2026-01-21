@@ -11,6 +11,7 @@ import AboutUs from './pages/AboutUs';
 import Products from './pages/Products';
 import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact';
+import Checkout from './pages/Checkout';
 
 function MainLayout() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -27,6 +28,7 @@ function MainLayout() {
           <Route path="/products" element={<Products />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </main>
 
